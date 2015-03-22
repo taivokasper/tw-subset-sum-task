@@ -3,6 +3,11 @@ package com.github.taivokasper;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Algorithm with modifications from http://comproguide.blogspot.com/2013/10/subset-sum-problem.html
+ * Used dynamic programming to decrease the complexity.
+ */
 public class SubsetSum {
 
     //method based on dynamic programming

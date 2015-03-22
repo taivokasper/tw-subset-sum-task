@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * Not good looking at all!
+ * Needs a lot of rethinking
+ */
 public class Main {
     private final List<Integer> fromList;
     private final List<Integer> toList;
@@ -12,7 +16,7 @@ public class Main {
         fromList = readFile(fromUrl, Comparator.<Integer>naturalOrder());
         toList = readFile(toUrl, Comparator.<Integer>naturalOrder());
 
-        System.out.println(String.format("The size of the from list is %d and size of to list is %d", fromList.size(), toList.size()));
+//        System.out.println(String.format("The size of the from list is %d and size of to list is %d", fromList.size(), toList.size()));
 
         for (Integer sum : fromList) {
             int endOfSliceIndex = 0;
@@ -23,6 +27,7 @@ public class Main {
                 endOfSliceIndex = i;
             }
 
+            // Look items from the beginning (smallest) to the size of the expected sum. No point in looking at higher values.
             match(sum, 0, endOfSliceIndex);
         }
     }
@@ -30,8 +35,12 @@ public class Main {
     private void match(Integer expectedSum, Integer from, Integer to) {
 //        System.out.println(String.format("sum %s slice from %d to %d", expectedSum, from, to));
         List<Integer> sublistCollection = toList.subList(from, to + 1);
-        int[] subList = sublistCollection.stream().mapToInt(i -> i).toArray();
-        List<Integer> integers = SubsetSum.hasSum(subList, expectedSum);
+        List<Integer> integers = SubsetSum.hasSum(
+                sublistCollection.stream().mapToInt(i -> i).toArray(),
+                expectedSum
+        );
+        if (integers == null)
+            return;
         System.out.print(expectedSum + ";" + strJoin(integers, ","));
         System.out.println();
 
